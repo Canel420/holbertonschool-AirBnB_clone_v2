@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Fabric script that generates a .tgz archive
-from the contents of the web_static folder.
+Fabric script that distributes an
+archive to my web servers.
 """
 from fabric.api import local, put, run, env
 from datetime import datetime
@@ -27,7 +27,7 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """Deploy the boxing package tgz file
+    """Deploy the package tgz file
     """
     try:
         archive = archive_path.split('/')[-1]
