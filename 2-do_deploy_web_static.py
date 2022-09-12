@@ -6,6 +6,7 @@ archive to my web servers.
 """
 from fabric.api import local, put, run, env
 from datetime import datetime
+from os.path import exists
 
 env.user = 'ubuntu'
 env.hosts = ['54.82.52.66', '54.81.88.246']
@@ -29,15 +30,18 @@ def do_pack():
 def do_deploy(archive_path):
     """Deploy the package tgz file
     """
+    if not exists(archive_path):
+        return False
+
     try:
         archive = archive_path.split('/')[-1]
         path = '/data/web_static/releases/' + archive.strip('.tgz')
         current = '/data/web_static/current'
         put(archive_path, '/tmp/')
         run('mkdir -p {}/'.format(path))
-        run('tar -xzf /tmp/{} -C {}/'.format(archive, path))
+        run('tar -xzf /tmp/{} -C {}'.format(archive, path))
         run('rm /tmp/{}'.format(archive))
-        run('mv {}/web_static/* {}/'.format(path, path))
+        run('mv {}/web_static/* {}'.format(path, path))
         run('rm -rf {}/web_static'.format(path))
         run('rm -rf {}'.format(current))
         run('ln -s {} {}'.format(path, current))
