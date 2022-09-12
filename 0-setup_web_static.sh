@@ -3,9 +3,9 @@
 
 sudo apt -y update
 sudo apt -y install nginx
+sudo ufw allow 'Nginx HTTP'
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
-sudo service nginx start
 echo "<html>
   <head>
   </head>
