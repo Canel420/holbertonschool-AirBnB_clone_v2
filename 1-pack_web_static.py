@@ -7,9 +7,6 @@ from the contents of the web_static folder.
 from fabric.api import local, env
 from datetime import datetime
 
-env.user = 'ubuntu'
-env.hosts = ['54.82.52.66', '54.81.88.246']
-
 
 def do_pack():
     """

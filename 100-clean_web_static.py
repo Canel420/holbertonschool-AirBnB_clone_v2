@@ -55,6 +55,7 @@ def deploy():
     answer = do_deploy(archive_path)
     return answer
 
+
 def do_clean(number=0):
     """
     Keep it cleanning the repositories
