@@ -25,7 +25,7 @@ def all_states():
 @app.route('/states/<string:id>', strict_slashes=False)
 def search_state(id=None):
     """ Displays a Html page with a state search """
-    return render_template('9-state.html',
+    return render_template('9-states.html',
                            states=storage.all(State)
                            .get('State.{}'.format(id)))
 
