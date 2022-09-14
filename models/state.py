@@ -4,7 +4,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.city import City
-from models import storage
 from os import getenv
 
 
@@ -27,6 +26,7 @@ class State(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
             Getter attribute that returns the list of City
             instances with state_id equals to the current State.id
             """
+            from models import storage
             result = []
             cities = storage.all(City).values()
             for city in cities:
