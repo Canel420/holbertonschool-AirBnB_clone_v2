@@ -4,22 +4,21 @@
 Script that starts a Flask web application.
 """
 from flask import Flask, render_template
-from models import storage
-from models.state import State
+import models
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
 def teardown_db(self):
     """ closes or deallocates the resource if exists"""
-    storage.close()
+    models.storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
 def all_cities():
     """ Displays a HTML page """
     return render_template('7-states_list.html',
-                           states=storage.all(State))
+                           states=models.storage.all('State'))
 
 
 if __name__ == '__main__':
