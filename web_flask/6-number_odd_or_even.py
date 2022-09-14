@@ -36,7 +36,7 @@ def python_txt(text='is cool'):
 @app.route('/number/<int:n>', strict_slashes=False)
 def is_num(n):
     """ Displays if given n is a number """
-    return f'{n} is a number'
+    return "{} is a number".format(n)
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
