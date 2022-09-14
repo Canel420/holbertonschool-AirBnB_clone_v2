@@ -7,13 +7,16 @@ from models.city import City
 from os import getenv
 
 
-class State(BaseModel, Base if (getenv("HBNB_TYPE_STORAGE")=="db") else object):
+class State(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
+            object):
     """ State class """
-    if getenv("HBNB_TYPE_STORAGE") == "db":
+    if (getenv('HBNB_TYPE_STORAGE') == 'db'):
         __tablename__ = 'states'
+        __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8',
+                          'mysql_collate': 'utf8_general_ci'}
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state", cascade="delete")
-
+        cities = relationship("City", backref="state",
+                              cascade="all, delete-orphan")
     else:
         name = ""
 
@@ -23,6 +26,7 @@ class State(BaseModel, Base if (getenv("HBNB_TYPE_STORAGE")=="db") else object):
         Getter attribute that returns the list of City
         instances with state_id equals to the current State.id
         """
+
         from models import storage
         result = []
         cities = storage.all(City).values()
