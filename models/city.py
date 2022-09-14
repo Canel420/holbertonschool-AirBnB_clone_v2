@@ -13,6 +13,8 @@ class City(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
 
     if (getenv('HBNB_TYPE_STORAGE') == 'db'):
         __tablename__ = 'cities'
+        __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8',
+                          'mysql_collate': 'utf8_general_ci'}
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
         places = relationship(

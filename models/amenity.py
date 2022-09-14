@@ -13,6 +13,8 @@ class Amenity(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
     """
     if (getenv('HBNB_TYPE_STORAGE') == 'db'):
         __tablename__ = 'amenities'
+        __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8',
+                          'mysql_collate': 'utf8_general_ci'}
         name = Column(String(128), nullable=False)
         places_amenities = relationship(
             "Place",

@@ -12,6 +12,8 @@ class State(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
     """ State class """
     if (getenv('HBNB_TYPE_STORAGE') == 'db'):
         __tablename__ = 'states'
+        __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8',
+                          'mysql_collate': 'utf8_general_ci'}
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state",
                               cascade="all, delete-orphan")

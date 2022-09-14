@@ -32,6 +32,8 @@ class Place(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
     """ A place to stay """
     if (getenv('HBNB_TYPE_STORAGE') == 'db'):
         __tablename__ = 'places'
+        __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8',
+                          'mysql_collate': 'utf8_general_ci'}
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
@@ -46,14 +48,15 @@ class Place(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
 
         reviews = relationship(
             'Review',
-            backref='state',
+            backref='place',
             cascade="all, delete, delete-orphan"
         )
 
         amenities = relationship(
             'Amenity',
             secondary=place_amenity,
-            viewonly=False
+            viewonly=False,
+            overlaps="places_amenities"
         )
     else:
         city_id = ""
@@ -71,7 +74,7 @@ class Place(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
         @property
         def reviews(self):
             """ Getter that that returns the list of Reviews instances """
-            instances = models.storage.all('Review')
+            instances = models.storage.all(Review)
             new = []
             for review in instances.values():
                 if review.place_id == (self.id):
@@ -91,7 +94,7 @@ class Place(BaseModel, Base if (getenv('HBNB_TYPE_STORAGE') == 'db') else
                     new.append(amenity)
             return new
 
-        @reviews.setter
+        @amenities.setter
         def amenities(self, obj):
             """
             Setter attribute amenities that handles append method
