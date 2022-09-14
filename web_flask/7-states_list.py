@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Script that starts a Flask web application.
+Created on Tue Sep  1 14:42:23 2020
+
+@author: Robinson Montes
 """
 from models import storage
 from models.state import State
@@ -10,14 +12,15 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def teardown_db(self):
-    """ closes or deallocates the resource if exists"""
+def appcontext_teardown(self):
+    """use storage for fetching data from the storage engine
+    """
     storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
-def all_cities():
-    """ Displays a HTML page """
+def state_info():
+    """Display a HTML page inside the tag BODY"""
     return render_template('7-states_list.html',
                            states=storage.all(State))
 

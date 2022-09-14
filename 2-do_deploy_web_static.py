@@ -1,20 +1,19 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Fabric script that distributes an
-archive to my web servers.
+Created on Mon Aug 13 14:21:54 2020
+@author: Robinson Montes
 """
 from fabric.api import local, put, run, env
 from datetime import datetime
-from os.path import exists
 
 env.user = 'ubuntu'
-env.hosts = ['54.82.52.66', '54.81.88.246']
+env.hosts = ['35.227.35.75', '100.24.37.33']
 
 
 def do_pack():
     """
-    Change web_static directory into a packages as .tgz
+    Targginng project directory into a packages as .tgz
     """
     now = datetime.now().strftime("%Y%m%d%H%M%S")
     local('sudo mkdir -p ./versions')
@@ -28,16 +27,13 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """Deploy the package tgz file
+    """Deploy the boxing package tgz file
     """
-    if not exists(archive_path):
-        return False
-
     try:
         archive = archive_path.split('/')[-1]
         path = '/data/web_static/releases/' + archive.strip('.tgz')
         current = '/data/web_static/current'
-        put(archive_path, '/tmp/')
+        put(archive_path, '/tmp')
         run('mkdir -p {}/'.format(path))
         run('tar -xzf /tmp/{} -C {}'.format(archive, path))
         run('rm /tmp/{}'.format(archive))
@@ -47,5 +43,5 @@ def do_deploy(archive_path):
         run('ln -s {} {}'.format(path, current))
         print('New version deployed!')
         return True
-    except Exception:
+    except:
         return False

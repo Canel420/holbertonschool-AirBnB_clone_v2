@@ -1,16 +1,19 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Fabric script that generates a .tgz archive
-from the contents of the web_static folder.
+Created on Mon Aug 13 14:21:54 2020
+@author: Robinson Montes
 """
 from fabric.api import local, env
 from datetime import datetime
 
+env.user = 'ubuntu'
+env.hosts = ['35.227.35.75', '100.24.37.33']
+
 
 def do_pack():
     """
-    Change web_static directory into a packages as .tgz
+    Targging project directory into a packages as .tgz
     """
     now = datetime.now().strftime("%Y%m%d%H%M%S")
     local('sudo mkdir -p ./versions')
