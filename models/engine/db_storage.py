@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
-import models
 from models.base_model import Base
 from models.user import User
 from models.state import State
@@ -72,4 +71,4 @@ class DBStorage():
 
     def close(self):
         """ close the class Session """
-        self.__session.remove()
+        self.__session.close()
