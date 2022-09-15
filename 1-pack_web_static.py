@@ -1,14 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Aug 13 14:21:54 2020
-@author: Robinson Montes
+Bash script that sets up your web servers
+for the deployment of web_static.
 """
 from fabric.api import local, env
 from datetime import datetime
-
-env.user = 'ubuntu'
-env.hosts = ['35.227.35.75', '100.24.37.33']
 
 
 def do_pack():
