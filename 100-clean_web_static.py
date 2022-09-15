@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Aug 13 14:21:54 2020
-@author: Robinson Montes
+Fabric script  that deletes out-of-date archives
 """
 from fabric.api import local, put, run, env, cd, lcd
 from datetime import datetime
 
 env.user = 'ubuntu'
-env.hosts = ['35.227.35.75', '100.24.37.33']
+env.hosts = ['54.82.52.66', '54.81.88.246']
 
 
 def do_pack():
@@ -43,7 +42,7 @@ def do_deploy(archive_path):
         run('ln -s {} {}'.format(path, current))
         print('New version deployed!')
         return True
-    except:
+    except Exception:
         return False
 
 
